@@ -1,0 +1,37 @@
+services:
+  app-admin:
+    build:
+      context: ./app-admin
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    environment:
+      DATABASE_URI: mongodb://aiep-admin:aiep2024!@mongo:27017
+      PAYLOAD_SECRET: d1b8a0cf8777070cad101e1d
+      PAYLOAD_CONFIG_PATH: dist/payload.config.js
+    restart: always
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: aiep-admin
+      MONGO_INITDB_ROOT_PASSWORD: aiep2024!
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - app-admin
+    restart: always
+
+volumes:
+  data:
