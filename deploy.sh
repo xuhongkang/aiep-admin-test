@@ -9,14 +9,13 @@ sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 
 # Build and run the Docker containers
-cd ./aiep-app
+cd ./aiep-admin-test
 sudo docker-compose up --build -d
 
 ## To rebuild
 sudo docker-compose down
 sudo git pull
 sudo docker-compose up --build -d
-
 
 # Optionally, renew Let's Encrypt certificates
 # sudo apt-get install -y certbot
